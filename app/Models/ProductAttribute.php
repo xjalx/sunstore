@@ -35,14 +35,6 @@ class ProductAttribute extends Model
     }
 
     /**
-     * Check if this attribute has a numeric value
-     */
-    public function isNumeric(): bool
-    {
-        return $this->numeric_value !== null;
-    }
-
-    /**
      * Create attribute with auto-detection of value type
      */
     public static function createWithValue(int $productId, string $key, mixed $value): self
@@ -55,21 +47,5 @@ class ProductAttribute extends Model
             'string_value' => $isNumeric ? null : (string) $value,
             'numeric_value' => $isNumeric ? (float) $value : null,
         ]);
-    }
-
-    /**
-     * Update or create attribute with auto-detection of value type
-     */
-    public static function setValueFor(int $productId, string $key, mixed $value): self
-    {
-        $isNumeric = is_numeric($value);
-
-        return self::updateOrCreate(
-            ['product_id' => $productId, 'attribute_key' => $key],
-            [
-                'string_value' => $isNumeric ? null : (string) $value,
-                'numeric_value' => $isNumeric ? (float) $value : null,
-            ]
-        );
     }
 }
