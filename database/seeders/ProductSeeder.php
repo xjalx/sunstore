@@ -39,11 +39,14 @@ class ProductSeeder extends Seeder
                 'description' => $row[5],
             ]);
 
-            ProductAttribute::createWithValue(
-                $product->id,
-                $type->attributeKey(),
-                $row[4]
-            );
+            $attributes = $type->filterableAttributes();
+            if (!empty($attributes)) {
+                ProductAttribute::createWithValue(
+                    $product->id,
+                    $attributes[0]->value,
+                    $row[4]
+                );
+            }
         }
 
         fclose($file);
