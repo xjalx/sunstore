@@ -17,7 +17,9 @@ services:
       - .:/app
       - /app/vendor
     networks:
-      - sunstore-network
+      sunstore-network:
+        aliases:
+          - app
     depends_on:
       - db
     profiles:
@@ -33,7 +35,9 @@ services:
     restart: unless-stopped
     working_dir: /app
     networks:
-      - sunstore-network
+      sunstore-network:
+        aliases:
+          - app
     depends_on:
       - db
     profiles:
